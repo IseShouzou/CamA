@@ -1,0 +1,28 @@
+<!Doctype html>
+<html lang='ja'>
+  <head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, height=device-height">
+    <title>Camera Test</title>
+    <script type="text/javascript" src="script.js"></script>
+  </head>
+
+  <style>
+    .Sliders{
+      position: absolute;
+      top : 20px;
+      left: 10px;
+    }
+  </style> 
+
+  <body>
+    <canvas id="canvas" ></canvas>
+    <div class="Sliders" >
+<pre  style="font-size: 2em;" >
+   0<input type="range" value =  "0" min=   "0" max="360" step="1" id="SliderAlpha">360 alpha</label><br>
+-180<input type="range" value =  "0" min="-180" max="180" step="1" id="SliderBeta" >180 beta</label><br>
+ -90<input type="range" value = "90" min= "-90" max= "90" step="1" id="SliderGamma"> 90 gamma</label><br>
+    </div>
+</pre>
+  </body>
+</html>
