@@ -1,12 +1,7 @@
-
 window.onload = function(){
 
     let canvas = document.getElementById("canvas");
     let ctx = canvas.getContext("2d");
-
-    //let alpRad = 0.0;
-    //let betRad = 0.0;
-    //let gamRad = 0.0;
 
     canvas.setAttribute("width", window.innerWidth )
     canvas.setAttribute("height", window.innerHeight )
@@ -36,25 +31,30 @@ window.onload = function(){
     let gam = sliderC.value;
 
     sliderA.addEventListener("input", function(e){
-        //console.log( sliderA.value );
-        alp= sliderA.value;
+        //alp= sliderA.value;
     })
 
     sliderB.addEventListener("input", function(e){
-        //console.log( sliderB.value );
-        bet = sliderB.value;
+        //bet = sliderB.value;
     })
 
     sliderC.addEventListener("input", function(e){
-        //console.log( sliderC.value );
-        gam = sliderC.value;
+        //gam = sliderC.value;
     })
 
     window.addEventListener("deviceorientation", function(e){
-        alpRad = ( e.alpha || 0);
-        betRad = ( e.beta  || 0);
-        gamRad = ( e.gamma || 0);
+        alp = ( e.alpha || 0);
+        bet = ( e.beta  || 0);
+        gam = ( e.gamma || 0);
     });
+
+    window.addEventListener( 'resize', ()=>{
+        //console.log( 'resize' )
+        canvas.setAttribute("width", window.innerWidth );
+        canvas.setAttribute("height", window.innerHeight );
+
+} )
+
 
     function calcDCM(){
 
@@ -82,13 +82,17 @@ window.onload = function(){
         let m33 =   cg * cb;
 
         // vertical
-        let mat = [ [ -m32, -m31,  m33 ],
-                    [  m12,  m11, -m13 ],
-                    [ -m22, -m21,  m23 ] ];
+        //let mat = [ [ -m32, -m31,  m33 ],
+        //            [  m12,  m11, -m13 ],
+        //            [ -m22, -m21,  m23 ] ];
         // horizontal
         //let mat = [ [ -m31, m32, m33 ],
         //            [ -m21, m22, m23 ],
         //            [ -m11, m12, m13 ] ];
+
+        let mat = [ [ -m31, -m32, -m33 ],
+                    [  m11,  m12,  m13 ],
+                    [ -m21, -m22, -m23 ] ];
 
         phi = 180.0 / Math.PI * Math.atan2(   mat[1][2], mat[2][2] );
         the = 180.0 / Math.PI * Math.atan2( - mat[0][2], Math.sqrt( mat[1][2] * mat[1][2] + mat[2][2] * mat[2][2]) );
@@ -116,12 +120,14 @@ window.onload = function(){
                         let W = canvas.width;
                         let H = canvas.height;
 
-                        let e = W / 2.0 / Math.tan( fovy / 2.0 * Math.PI / 180.0 );
+                        //console.log( 'W, H  :  ',W, H );
+
+                        let e = H / 2.0 / Math.tan( fovy / 2.0 * Math.PI / 180.0 );
                         let dcm = calcDCM();
-                        let coeff = [ [   0.0        , - 2.0 * e / W ],
-                                      [   0.0        ,   2.0 * e / W ],
-                                      [ - 2.0 * e / H,   0.0         ],
-                                      [   2.0 * e / H,   0.0         ] ];
+                        let coeff = [ [   0.0        , - 2.0 * e / H ],
+                                      [   0.0        ,   2.0 * e / H ],
+                                      [ - 2.0 * e / W,   0.0         ],
+                                      [   2.0 * e / W,   0.0         ] ];
 
                         let curPnts = [];
                         for( var p of pnts ){
@@ -163,12 +169,6 @@ window.onload = function(){
                                 SA = SB;
                             }
 
-                            //if( count == 20 ){ 
-                            //    console.log( alp, bet, gam );
-                            //    console.log( phi, the, psi );
-                            //    console.log( curPnts );
-                            //    //console.log( newPnts );
-                            //}
                             curPnts = newPnts;
                         }
 
@@ -179,20 +179,6 @@ window.onload = function(){
 
                         ctx.beginPath();
 
-                        //let dcm = calcDCM();
-/*
-                        for( let k = 0; k<pnts.length; k++ ){
-                            let x = 0.0;
-                            let y = 0.0;
-                            let z = 0.0;
-                            for( let j = 0; j<3; j++ ){
-                                x += dcm[0][j] * pnts[k][j];
-                                y += dcm[1][j] * pnts[k][j];
-                                z += dcm[2][j] * pnts[k][j];
-                            }
-                            XX = W / 2.0 + e * z / x;
-                            YY = H / 2.0 - e * y / x;
-*/
                         flag = true;
                         for( let p of curPnts ){
 
