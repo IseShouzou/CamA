@@ -38,34 +38,22 @@ window.onload = function(){
     sliderA.addEventListener("input", function(e){
         //console.log( sliderA.value );
         alp= sliderA.value;
-        console.log( Math.round(phi), Math.round(the), Math.round(psi) );
     })
 
     sliderB.addEventListener("input", function(e){
         //console.log( sliderB.value );
         bet = sliderB.value;
-        console.log( Math.round(phi), Math.round(the), Math.round(psi) );
     })
 
     sliderC.addEventListener("input", function(e){
         //console.log( sliderC.value );
         gam = sliderC.value;
-        console.log( Math.round(phi), Math.round(the), Math.round(psi) );
     })
 
     window.addEventListener("deviceorientation", function(e){
-        //alpRad = ( e.alpha || 0) * Math.PI / 180.0;
-        //betRad = ( e.beta  || 0) * Math.PI / 180.0;
-        //gamRad = ( e.gamma || 0) * Math.PI / 180.0;
-
-        //alpRad =   0.0 * Math.PI / 180.0;
-        //betRad =  90.0 * Math.PI / 180.0;
-        //gamRad =  90.0 * Math.PI / 180.0;
-
-        //alpRad =  sliderA.value * Math.PI / 180.0;
-        //betRad =  sliderB.value * Math.PI / 180.0;
-        //gamRad =  sliderC.value * Math.PI / 180.0;
-
+        alpRad = ( e.alpha || 0);
+        betRad = ( e.beta  || 0);
+        gamRad = ( e.gamma || 0);
     });
 
     function calcDCM(){
@@ -242,5 +230,4 @@ window.onload = function(){
         .catch(e => alert("error" + e.message));
 
 };
-
 
